@@ -1,0 +1,31 @@
+FROM alpine:edge
+RUN sed -i s/cdn/6/ /etc/apk/repositories \
+    && apk add --update --progress \
+        musl \
+        build-base \
+        python3 \
+        python3-dev \
+        bash \
+        git \
+    && pip3 install --no-cache-dir --upgrade pip
+
+RUN cd /usr/bin \
+  && ln -sf easy_install-3.5 easy_install \
+  && ln -sf python3 python \
+  && ln -sf pip3 pip
+
+# RUN adduser -D -s /sbin/nologin etlconfluence \
+#  && mkdir /run/etldocs \
+#  && chown etlconfluence:root /run/etldocs \
+#  && mkdir /mnt/etldocsdata
+
+RUN mkdir /run/etldocs && mkdir /mnt/etldocsdata
+
+
+#RUN pip install pycurl
+
+# for development i want to poke a hole using a volume... BUT once running as a container.. then pull the code.
+RUN git clone https://git.biodesign.asu.edu/primusdj/etldocs.git /run/etldocs
+
+RUN pip install virtualenv
+RUN virtualenv /run/env && source /run/env/bin/activate

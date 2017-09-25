@@ -1,0 +1,7 @@
+logs/**
+vm-NAME/**
+.vagrant/*
+.DS_Store
+.project
+*.pyc
+*.egg-info

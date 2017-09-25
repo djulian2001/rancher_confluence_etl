@@ -1,0 +1,35 @@
+{
+"id":"65593",
+"type":"page",
+"status":"current",
+"title":"Saguaro.given_pp",
+"space":{
+	"id":98306,
+	"key":"RC",
+	"name":"rc",
+	"type":"global",
+	"_links":{
+		"webui":"/display/RC",
+		"self":"http://192.168.33.50:8090/confluence/rest/api/space/RC"},
+		"_expandable":{"metadata":"",
+		"icon":"",
+		"description":"",
+		"homepage":"/rest/api/content/65573"}},
+		"history":{
+			"latest":true,
+			"createdBy":{
+				"type":"known",
+				"username":"admin",
+				"userKey":"2c91808457bf81c20157bf8507730002",
+				"profilePicture":{
+					"path":"/confluence/images/icons/profilepics/default.png",
+					"width":48,
+					"height":48,
+					"isDefault":true
+				},
+				"displayName":"david julian",
+				"_links":{
+					"self":"http://192.168.33.50:8090/confluence/rest/experimental/user?key=2c91808457bf81c20157bf8507730002"}},
+				"createdDate":"2016-10-13T21:54:29.049Z",
+				"_links":{
+					"self":"http://192.168.33.50:8090/confluence/rest/api/content/65593/history"},"_expandable":{"lastUpdated":"","previousVersion":"","contributors":"","nextVersion":""}},"version":{"by":{"type":"known","username":"admin","userKey":"2c91808457bf81c20157bf8507730002","profilePicture":{"path":"/confluence/images/icons/profilepics/default.png","width":48,"height":48,"isDefault":true},"displayName":"david julian","_links":{"self":"http://192.168.33.50:8090/confluence/rest/experimental/user?key=2c91808457bf81c20157bf8507730002"}},"when":"2016-10-13T21:54:29.049Z","message":"","number":1,"minorEdit":false,"_links":{"self":"http://192.168.33.50:8090/confluence/rest/experimental/content/65593/version/1"},"_expandable":{"content":"/rest/api/content/65593"}},"extensions":{"position":"none"},"_links":{"webui":"/display/RC/Saguaro.given_pp","tinyui":"/x/OQAB","collection":"/rest/api/content","base":"http://192.168.33.50:8090/confluence","context":"/confluence","self":"http://192.168.33.50:8090/confluence/rest/api/content/65593"},"_expandable":{"container":"/rest/api/space/RC","metadata":"","operations":"","children":"/rest/api/content/65593/child","ancestors":"","body":"","descendants":"/rest/api/content/65593/descendant"}}

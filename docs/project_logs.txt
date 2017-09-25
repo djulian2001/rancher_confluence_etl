@@ -1,0 +1,99 @@
+HOST$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 08:00:27:8d:18:5e brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86161sec preferred_lft 86161sec
+    inet6 fe80::a00:27ff:fe8d:185e/64 scope link 
+       valid_lft forever preferred_lft forever
+
+3: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 08:00:27:85:4f:bd brd ff:ff:ff:ff:ff:ff
+    inet 192.168.33.50/24 brd 192.168.33.255 scope global enp0s8
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe85:4fbd/64 scope link 
+       valid_lft forever preferred_lft forever
+
+
+# the docker bridge running on the HOST with 192.168.22.50
+4: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP 
+    link/ether 02:42:df:06:5e:29 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:dfff:fe06:5e29/64 scope link 
+       valid_lft forever preferred_lft forever
+
+
+
+
+6: veth06f2c7e@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP 
+    link/ether de:3a:01:18:76:c4 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::dc3a:1ff:fe18:76c4/64 scope link 
+       valid_lft forever preferred_lft forever
+
+HOST$ ip route 
+efault via 10.0.2.2 dev enp0s3  proto static  metric 100 
+10.0.2.0/24 dev enp0s3  proto kernel  scope link  src 10.0.2.15  metric 100 
+169.254.0.0/16 dev enp0s8  scope link  metric 1003 
+172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.0.1 
+192.168.33.0/24 dev enp0s8  proto kernel  scope link  src 192.168.33.50
+
+
+
+
+# Setup details...  A few steps are manual with Rancher, but so far seems to be working well.
+ip address:
+129.219.115.197
+box ip:
+192.168.33.50
+confluence home dir:
+/home/vagrant/confluence
+
+confluence setup:
+user: admin pw: docker
+space: rc
+
+server id:
+B99V-ICLK-AUEG-N6OO
+license key:
+AAABJA0ODAoPeNptkF9LwzAUxd/zKQK+6EPGUqX7AwFnW6TYtcNu88WXmN1ppMvKTTLctzddFacIC
+YR7zzn3d3PxBBtaKUd5RPloOhxNbzhN0iWNhjwmKViFunV6b0SyN9vGg1FAL2vAA+DV85RmB9l42
+QlIgnB6pNKB6OyMDxm/JioYB1I5fQDh0ENfqJ1EByi2srFAQrgLkmwudSNa1DtvN++30voBbDz5G
+XIWUGgFxsLy2EIpdyCSaj7PHpN8VpCmb60BbeeJSIg1DowM8NlHq/F4xsjDIRW+SqNtP2NWr0i/Y
+Z6Ku8lkzfKkeGCzVXbPyriqSJ2VIlxWjOM4GvMJ+WIJ8iJPf3VOqKXfvQBW25UNRILxb/3/LAuP6
+k1a+PuPn6OYicMwLAIUbtCW3wW+MSt+FaQwGSSCRvsN05QCFHurL06iRmna/8fipxO0dIpU18zjX
+02em
+
+# lets get the data out of the confluence containers with a python tool.
+docker run -d pandada8/alpine-python python -V # this didn't work... so i built it with the dockerfile.
+docker create -di --name etlConfluencePy -v /vagrant/etlConfluence:
+docker images
+8488340bd2bc   # my built docker image
+
+[vagrant@rc-docker-rancher ~]$ docker exec d8108c4c2e02 adduser -N -m etlconfluence
+adduser: unrecognized option: N
+BusyBox v1.25.0 (2016-08-11 10:59:07 GMT) multi-call binary.
+
+Usage: adduser [OPTIONS] USER [GROUP]
+
+Create new user, or add USER to GROUP
+
+  -h DIR    Home directory
+  -g GECOS  GECOS field
+  -s SHELL  Login shell
+  -G GRP    Add user to existing group
+  -S    Create a system user
+  -D    Don't assign a password
+  -H    Don't create home directory
+  -u UID    User id
+  -k SKEL   Skeleton directory (/etc/skel)
+
+docker exec d8108c4c2e02 adduser -D -h /home/etlconfluence -s /sbin/nologin etlconfluence
+docker exec d8108c4c2e02 userdel etlconfluence
+

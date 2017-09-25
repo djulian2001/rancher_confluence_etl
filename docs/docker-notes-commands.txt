@@ -1,0 +1,34 @@
+
+# these are the commands to get the application running ...
+docker exec 0692c503a1cb adduser -D -s /sbin/nologin etlconfluence
+docker exec 0692c503a1cb mkdir /run/etldocs
+docker exec 0692c503a1cb chown etlconfluence:root /run/etldocs
+docker exec 0692c503a1cb git clone https://git.biodesign.asu.edu/primusdj/etldocs.git /run/etldocs
+
+
+# lets get a container running that will have a volume mapped to /vagrant/etldocs:/run/etldocs
+#		- This will allow me to make changes to the python files without doing all of those git push pull actions to get the code into the files.
+
+
+# add the data container
+docker run -d --volume /mnt/etldocsdata --name vdc_etldocs alpine:edge echo data container
+
+docker
+
+docker run -d -it --name py_etldocs --volumes-from vdc_etldocs 6d6d13577b7c /bin/bash
+docker run -it --name py_etldocs --volumes-from vdc_etldocs 6d6d13577b7c
+
+
+docker exec py_etldocs ls -lah /run/etldocs
+
+docker exec py_etldocs bash -c 'cd /run/etldocs ; git pull'
+docker exec py_etldocs python /run/etldocs/main.py
+
+
+
+
+# how can the container talk to the confluence instance...
+-- docker exec py_etldocs wget http://192.168.33.50:8090/confluence/rest/api/content?type=page&spaceKey=RC
+# thest worked:
+docker exec py_etldocs wget http://172.17.0.4:8090/confluence/rest/api/content?type=page&spaceKey=RC
+docker exec py_etldocs wget http://10.42.251.209:8090/confluence/rest/api/content?type=page&spaceKey=RC
